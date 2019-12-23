@@ -5,6 +5,7 @@ import android.os.Bundle
 import android.util.Log
 import android.view.View
 import android.widget.Button
+import android.widget.EditText
 import android.widget.Toast
 import com.cometchat.pro.constants.CometChatConstants
 import com.cometchat.pro.core.CometChat
@@ -20,25 +21,27 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_home)
 
-//        val btn_click_me = findViewById(R.id.button) as Button
+        val edt_msg = findViewById(R.id.message) as EditText
+        val send_btn = findViewById(R.id.send) as Button
 
-        resId = R.id.main_frame
-        val oneToOneFragment = OneToOneFragment().apply {
-            arguments = Bundle().apply {
-                //                    putString(StringContract.IntentString.USER_ID, t.uid)
-//                    putString(StringContract.IntentString.USER_NAME, t.name)
-//                    putString(StringContract.IntentString.USER_AVATAR, t.avatar)
-//                    putString(StringContract.IntentString.USER_STATUS, t.status)
-//                    putLong(StringContract.IntentString.LAST_ACTIVE, t.lastActiveAt)
-
-            }
-        }
-        supportFragmentManager.beginTransaction()
-            .replace(resId, oneToOneFragment).addToBackStack(null).commit()
-//        btn_click_me.setOnClickListener {
-//          //  sendMessage()
+//        resId = R.id.main_frame
+//        val oneToOneFragment = OneToOneFragment().apply {
+//            arguments = Bundle().apply {
+//                //                    putString(StringContract.IntentString.USER_ID, t.uid)
+////                    putString(StringContract.IntentString.USER_NAME, t.name)
+////                    putString(StringContract.IntentString.USER_AVATAR, t.avatar)
+////                    putString(StringContract.IntentString.USER_STATUS, t.status)
+////                    putLong(StringContract.IntentString.LAST_ACTIVE, t.lastActiveAt)
 //
+//            }
 //        }
+//        supportFragmentManager.beginTransaction()
+//            .replace(resId, oneToOneFragment).addToBackStack(null).commit()
+        send_btn.setOnClickListener {
+//            val text = edt_msg.text
+            sendMessage(edt_msg.text.toString())
+
+        }
 
         onLoginClick("superhero1")
     }
@@ -72,15 +75,15 @@ class MainActivity : AppCompatActivity() {
     }
 
 
-    fun sendMessage()
+    fun sendMessage(msg:String)
     {
 
         val receiverID:String="superhero3"
-        val messageText:String="Sending message from demo app"
+       // val messageText:String="Sending message from demo app"
         val messageType:String= CometChatConstants.MESSAGE_TYPE_TEXT
         val receiverType:String=CometChatConstants.RECEIVER_TYPE_USER
 
-        val textMessage = TextMessage(receiverID, messageText,receiverType)
+        val textMessage = TextMessage(receiverID, msg,receiverType)
 
         CometChat.sendMessage(textMessage, object : CometChat.CallbackListener<TextMessage>() {
             override fun onSuccess(p0: TextMessage?) {
